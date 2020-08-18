@@ -1,0 +1,155 @@
+<html>
+<head>
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    if (typeof module === 'object') {
+      window.module = module;
+      module = undefined;
+    }
+  </script>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script>
+    if (window.module) {
+      module = window.module;
+    }
+  </script>
+  <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="https://kit.fontawesome.com/b73c9334a1.js" crossorigin="anonymous"></script>
+  <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
+  <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+    html,
+    body {
+      font-family: 'Roboto', sans-serif;
+
+    }
+  </style>
+  <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #16a085;z-index: -20000;">
+    <h3 style="color: white;"><a class="fa fa-book"></a>&nbsp;CV Manager</h3>
+    <span style="color: white;">&nbsp;1.0.1</span>
+  </nav>
+  <div class="container-fluid">
+    <div class="form-group mt-3" id="top-message"></div>
+  </div>
+  <div class="container-fluid">
+    <div class="row mt-1">
+      <div class="col-sm-4">
+        <input type="text" id="cvTitle" class="form-control" placeholder="Enter CV Title">
+      </div>
+      <div class="col-sm-4">
+        <input type="text" id="location" class="form-control" placeholder="Set File Location" readonly>
+      </div>
+      <div class="col-sm-2">
+        <button class="btn btn-warning btn-block" id="browse-directory"><a class="fa fa-file" style="margin-right: 8px;"></a>Browse</button>
+      </div>
+      <div class="col-sm-2">
+        <button class="btn btn-block" id="add-file" style="background: #16a085; color: white;"><a class="fa fa-plus" style="margin-right: 8px;"></a>&nbsp;Add</button>
+      </div>
+    </div>
+    <div class="row mt-1">
+      <div class="col-lg-12">
+        <div class="card card-primary">
+          <div class="card-body">
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#result">Added Files</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#rename">Manage Entries</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div id="rename" class="tab-pane">
+                <div class="card rounded-0">
+                  <div class="card-body">
+                    <div class="form-group row">
+                      <div class="col-sm-4">
+                        Choose Option
+                      </div>
+                      <div class="col-sm-8">
+                        <select id="rename-options" class="form-control">
+                          <option value="1">Delete</option>
+                          <option value="2">Rename</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group rename visible" id="delete-c">
+                      <ul id="rename-list" style="list-style: none;">
+                        <li>                      <input type="text" id="input-delete-character" class="form-control" placeholder="Type cv name here..">
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="form-group rename" id="replace-c">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <input type="text" id="input-replace-character-from" class="form-control" placeholder="from">
+                        </div>
+                        <div class="col-sm-6">
+                          <input type="text" id="input-replace-character-to" class="form-control" placeholder="to">
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-block" id="apply-rename" style="background: #16a085; color: white;">APPLY</button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="result" class="tab-pane active">
+                <div class="card-group" id="resultpage">
+                  <div class="col-sm-12" style="margin-top: 20px; margin-bottom: 20px;">
+                    <div class="input-group margin-bottom-sm">
+                      <input type="text" id="cvSearch" onkeyup="searchFunction();" class="form-control" placeholder="Search..">
+                    </div>
+                  </div>
+
+                </div>
+                <ul class="list-group" id="resultdetails" style="list-style:none; margin-left: 40px;">
+
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="node_modules/bootsalert/bootsalert.js"></script>
+  <script src="renderer.js"></script>
+  <script>    
+    const customTitleBar = require('custom-electron-titlebar');
+    let titlebar = new customTitleBar.Titlebar({
+      backgroundColor: customTitleBar.Color.fromHex("#16a085"),
+      shadow: false
+    });
+    titlebar.updateTitle("CV Manager | Complete Edition");
+    function searchFunction() {
+      // Declare variables
+      let input, filter, ul, li, a, i, txtValue;
+      input = document.getElementById('cvSearch');
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("resultdetails");
+      li = ul.getElementsByTagName('li');
+      for (i = 0; i < li.length; i++) {
+        span = li[i].getElementsByTagName("span")[0];
+        txtValue = span.textContent || span.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          li[i].style.display = "";
+        } else {
+          li[i].style.display = "none";
+        }
+      }
+    }
+    //? Adds new rename input.
+    if ($("#rename-options").val() == "2") {
+      $("#rename-list").append('<li><input type="text" id="input-delete-character-new" class="form-control" placeholder="New name.."></li>')
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+html, body {
+    overflow: hidden;
+    user-select: none;
+}
+
+.panel-group{
+    max-height: 260px;
+    overflow: auto;
+}
+.panel a{
+    text-decoration: none;
+    color: black;
+}
+
+.mt-1{
+    margin-top: 1rem;
+}
+.rename{
+    display: none;
+}
+.visible{
+    display:block !important;
+}
+#file-list{
+    max-height: 150px;
+    overflow: auto;
+}
+#resultpage{
+    max-height: 280px;
+    overflow: auto;
+}
+
